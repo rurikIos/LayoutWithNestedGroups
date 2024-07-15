@@ -21,7 +21,7 @@ final class ProductCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         [nameLabel, countLabel, costLabel].forEach { contentView.addSubview($0) }
-        contentView.backgroundColor = .yellow
+//        contentView.backgroundColor = .yellow
         
         costLabel.textAlignment = .right
     }

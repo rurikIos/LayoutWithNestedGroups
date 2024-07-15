@@ -32,6 +32,8 @@
 		73BEB94B2C40E79B00F93DA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73BEB94A2C40E79B00F93DA6 /* Assets.xcassets */; };
 		73BEB94E2C40E79B00F93DA6 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 73BEB94D2C40E79B00F93DA6 /* Base */; };
 		BB0E7E15FC10650902290433 /* Pods_LayoutWithNestedGroups.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 128DDBC76DB9A685F3C6C024 /* Pods_LayoutWithNestedGroups.framework */; };
+		E20AEE9B2C44EF1B0075BB69 /* GroupBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AEE9A2C44EF1B0075BB69 /* GroupBackgroundView.swift */; };
+		E20AEE9D2C44FDED0075BB69 /* GroupHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AEE9C2C44FDED0075BB69 /* GroupHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		73BEB94D2C40E79B00F93DA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		73BEB94F2C40E79B00F93DA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8780356807BAC98D1CDEE4A3 /* Pods-LayoutWithNestedGroups.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LayoutWithNestedGroups.release.xcconfig"; path = "Target Support Files/Pods-LayoutWithNestedGroups/Pods-LayoutWithNestedGroups.release.xcconfig"; sourceTree = "<group>"; };
+		E20AEE9A2C44EF1B0075BB69 /* GroupBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBackgroundView.swift; sourceTree = "<group>"; };
+		E20AEE9C2C44FDED0075BB69 /* GroupHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 		7343C0012C40E8C900310B38 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				E20AEE992C44EEF20075BB69 /* supplementary */,
 				7343BFFE2C40E8C900310B38 /* cell */,
 				7343BFFF2C40E8C900310B38 /* MainIntent.swift */,
 				7343C0002C40E8C900310B38 /* MainViewController.swift */,
@@ -190,6 +195,15 @@
 				128DDBC76DB9A685F3C6C024 /* Pods_LayoutWithNestedGroups.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E20AEE992C44EEF20075BB69 /* supplementary */ = {
+			isa = PBXGroup;
+			children = (
+				E20AEE9A2C44EF1B0075BB69 /* GroupBackgroundView.swift */,
+				E20AEE9C2C44FDED0075BB69 /* GroupHeaderView.swift */,
+			);
+			path = supplementary;
 			sourceTree = "<group>";
 		};
 		FEA7EEB2694E4175B98B8E54 /* Pods */ = {
@@ -325,6 +339,7 @@
 				7343C0162C40E8C900310B38 /* Dimens.swift in Sources */,
 				7343C00A2C40E8C900310B38 /* CellViewModel.swift in Sources */,
 				7343C00E2C40E8C900310B38 /* SaleCellViewModel.swift in Sources */,
+				E20AEE9D2C44FDED0075BB69 /* GroupHeaderView.swift in Sources */,
 				73BEB9422C40E79B00F93DA6 /* AppDelegate.swift in Sources */,
 				7343C0102C40E8C900310B38 /* CameraCell.swift in Sources */,
 				7343C00B2C40E8C900310B38 /* EmployeeCellViewModel.swift in Sources */,
@@ -332,6 +347,7 @@
 				7343C0122C40E8C900310B38 /* ProductCell.swift in Sources */,
 				7343C0052C40E8C900310B38 /* BaseState.swift in Sources */,
 				7343C0142C40E8C900310B38 /* MainIntent.swift in Sources */,
+				E20AEE9B2C44EF1B0075BB69 /* GroupBackgroundView.swift in Sources */,
 				7343C0112C40E8C900310B38 /* EmployeeCell.swift in Sources */,
 				7343C00D2C40E8C900310B38 /* ProductCellViewModel.swift in Sources */,
 				7343C0132C40E8C900310B38 /* SaleCell.swift in Sources */,

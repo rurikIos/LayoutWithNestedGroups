@@ -12,20 +12,26 @@ protocol MainView: BaseView where AssociatedState == MainState {}
 
 final class MainViewController: UIViewController, MainView {
     
+    static let groupBackgroundElementKind = "group-background-element-kind"
+    static let groupHeaderElementKind = "group-header-element-kind"
+    
     private let intent: MainIntent
     
     private var models: [[CellViewModel]] = [[]]
     
     private lazy var collectionViewLayout: UICollectionViewLayout = {
-        UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             self?.createSectionLayout(for: sectionIndex)
         }
+//        layout.register(GroupBackgroundView.self, forDecorationViewOfKind: Self.groupBackgroundElementKind)
+        return layout
     }()
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         
         collectionView.dataSource = self
+        collectionView.backgroundColor = .lightGray
         
         return collectionView
     }()
@@ -67,6 +73,18 @@ final class MainViewController: UIViewController, MainView {
         collectionView.register(ProductCell.self, forCellWithReuseIdentifier: "ProductCell")
         collectionView.register(EmployeeCell.self, forCellWithReuseIdentifier: "EmployeeCell")
         collectionView.register(SaleCell.self, forCellWithReuseIdentifier: "SaleCell")
+        
+        collectionView.register(
+            GroupBackgroundView.self,
+            forSupplementaryViewOfKind: Self.groupBackgroundElementKind,
+            withReuseIdentifier: GroupBackgroundView.identifier
+        )
+        
+        collectionView.register(
+            GroupHeaderView.self,
+            forSupplementaryViewOfKind: Self.groupHeaderElementKind,
+            withReuseIdentifier: GroupHeaderView.identifier
+        )
     }
     
     private func layout() {
@@ -76,6 +94,43 @@ final class MainViewController: UIViewController, MainView {
     private func createSectionLayout(for sectionIndex: Int) -> NSCollectionLayoutSection {
         let section = NSCollectionLayoutSection(group: createGroupLayout())
         return section
+    }
+    
+    private func groupBackground() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let backgroundSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .estimated(432)
+        )
+        let backgroundSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: backgroundSize,
+            elementKind: Self.groupBackgroundElementKind,
+            alignment: .topLeading,
+            absoluteOffset: .zero
+        )
+        backgroundSupplementary.zIndex = .min
+        let contentInsets = NSDirectionalEdgeInsets(
+            top: .zero,
+            leading: Dimens.offset_xs,
+            bottom: .zero,
+            trailing: Dimens.offset_xs
+        )
+        backgroundSupplementary.contentInsets = contentInsets
+        return backgroundSupplementary
+    }
+    
+    private func groupHeader() -> NSCollectionLayoutSupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(50)
+        )
+        let groupHeader = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: Self.groupHeaderElementKind,
+            alignment: .topLeading,
+            absoluteOffset: .zero
+        )
+        groupHeader.zIndex = .max
+        return groupHeader
     }
     
     private func createGroupLayout() -> NSCollectionLayoutGroup {
@@ -98,12 +153,20 @@ final class MainViewController: UIViewController, MainView {
         // кассы
         let boxOfficeGroupLayout = NSCollectionLayoutGroup.vertical(layoutSize: fullWidthGroupSize, subitems: [item])
         // товары
-        let productsGroupLayout = NSCollectionLayoutGroup.vertical(layoutSize: fullWidthGroupSize, repeatingSubitem: item, count: 9)
+        let productsGroupLayout = NSCollectionLayoutGroup.vertical(
+            layoutSize: fullWidthGroupSize,
+            repeatingSubitem: item,
+            count: 9
+        )
+        let groupBackground = groupBackground()
+        productsGroupLayout.supplementaryItems = [groupBackground]
         // левый столбец
         let groupLayout0 = NSCollectionLayoutGroup.vertical(
             layoutSize: halfWidthGroupSize,
             subitems: [boxOfficeGroupLayout, productsGroupLayout]
         )
+        groupLayout0.interItemSpacing = .fixed(8)
+//        groupLayout0.interItemSpacing = .fixed(58)
         
         // сотрудники
         let employeeGroupLayout = NSCollectionLayoutGroup.vertical(layoutSize: fullWidthGroupSize, repeatingSubitem: item, count: 4)
@@ -115,7 +178,6 @@ final class MainViewController: UIViewController, MainView {
         )
         
         let groupLayout = NSCollectionLayoutGroup.horizontal(layoutSize: fullWidthGroupSize, subitems: [groupLayout0, groupLayout1])
-        
         return groupLayout
     }
 }
@@ -168,6 +230,31 @@ extension MainViewController: UICollectionViewDataSource {
             ) as! SaleCell
             cell.setup(model)
             return cell
+        }
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        switch kind {
+        case Self.groupHeaderElementKind:
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: Self.groupHeaderElementKind,
+                withReuseIdentifier: GroupHeaderView.identifier,
+                for: indexPath
+            )
+            return header
+        case Self.groupBackgroundElementKind:
+            let background = collectionView.dequeueReusableSupplementaryView(
+                ofKind: Self.groupBackgroundElementKind,
+                withReuseIdentifier: GroupBackgroundView.identifier,
+                for: indexPath
+            )
+            return background
+        default:
+            fatalError("get me my supplementary!")
         }
     }
 }

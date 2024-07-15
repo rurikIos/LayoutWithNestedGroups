@@ -10,9 +10,16 @@ import UIKit
 struct Dimens {
     static let borderThickness_s: CGFloat = 1
     
+    static let offset_xs: CGFloat = 6
     static let offset_s: CGFloat = 8
     static let offset_m: CGFloat = 12
     
     static let inlineHeight_xs: CGFloat = 40
     static let inlineHeight_default: CGFloat = 48
+    
+    static let borderRadius_xs: CGFloat = 16
+}
+
+struct Colors {
+    static let backgroundColor: UIColor = .white
 }
